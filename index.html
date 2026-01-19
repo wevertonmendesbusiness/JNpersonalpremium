@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Jhon Novais | Personal Trainer Premium</title>
+
+  <style>
+    :root{
+      --bg:#070707;
+      --card:#111111;
+      --text:#ffffff;
+      --muted:#bdbdbd;
+      --gold:#D4A32F;
+      --line:rgba(255,255,255,.10);
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --radius:18px;
+      --max:1100px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 700px at 20% 0%, rgba(212,163,47,.14), transparent 55%),
+                  radial-gradient(900px 600px at 90% 10%, rgba(255,255,255,.06), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+    }
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 18px;}
+    header{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background: rgba(7,7,7,.75);
+      border-bottom:1px solid var(--line);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+      gap:12px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      min-width:220px;
+    }
+    .brand img{
+      height:44px; width:auto; display:block;
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,.5));
+    }
+    .navlinks{
+      display:flex; gap:18px; flex-wrap:wrap;
+      color:var(--muted);
+      font-size:14px;
+    }
+    .navlinks a:hover{color:#fff}
+    .cta{
+      background: linear-gradient(180deg, #f0c95b, var(--gold));
+      color:#000;
+      padding:10px 14px;
+      border-radius:12px;
+      font-weight:800;
+      box-shadow: var(--shadow);
+      border:1px solid rgba(255,255,255,.18);
+      white-space:nowrap;
+    }
+
+    .hero{padding:70px 0 26px;}
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:22px;
+      align-items:center;
+    }
+    .kicker{
+      color:var(--gold);
+      font-weight:800;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      font-size:12px;
+    }
+    h1{
+      margin:10px 0 12px;
+      font-size:46px;
+      line-height:1.05;
+      letter-spacing:-.02em;
+    }
+    .sub{
+      color:var(--muted);
+      font-size:16px;
+      line-height:1.55;
+      margin:0 0 18px;
+      max-width:60ch;
+    }
+    .heroBtns{display:flex; gap:12px; flex-wrap:wrap;}
+    .btn{
+      padding:12px 16px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color:#fff;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .btn.primary{
+      background: linear-gradient(180deg, #f0c95b, var(--gold));
+      color:#000;
+      border:1px solid rgba(255,255,255,.18);
+    }
+
+    .heroCard{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding:18px;
+      box-shadow: var(--shadow);
+    }
+    .heroCard .row{
+      display:flex; justify-content:space-between; gap:10px;
+      padding:10px 0; border-bottom:1px solid var(--line);
+      color:var(--muted); font-size:14px;
+    }
+    .heroCard .row:last-child{border-bottom:none}
+    .heroCard b{color:#fff}
+
+    section{padding:34px 0;}
+    .titleRow{
+      display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
+      margin-bottom:14px;
+    }
+    h2{
+      margin:0;
+      font-size:26px;
+      letter-spacing:-.01em;
+    }
+    .hint{color:var(--muted); font-size:14px}
+
+    .grid3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+    .card{
+      background: rgba(255,255,255,.04);
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding:16px;
+      box-shadow: 0 14px 40px rgba(0,0,0,.35);
+    }
+    .card p{margin:8px 0 0; color:var(--muted); line-height:1.55; font-size:14px}
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-size:12px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(212,163,47,.10);
+      color: #f7dc9b;
+      font-weight:700;
+    }
+
+    .gallery{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:14px;
+    }
+    .imgBox{
+      border-radius: var(--radius);
+      border:1px solid var(--line);
+      overflow:hidden;
+      background:#0b0b0b;
+      min-height: 260px;
+      position:relative;
+    }
+    .imgBox img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      filter: contrast(1.05);
+    }
+    .imgCap{
+      position:absolute; left:12px; bottom:12px;
+      background: rgba(0,0,0,.55);
+      border:1px solid rgba(255,255,255,.12);
+      padding:8px 10px;
+      border-radius:12px;
+      font-size:13px;
+      color:#fff;
+      backdrop-filter: blur(8px);
+    }
+    .sideCol{
+      display:grid;
+      grid-template-rows: 1fr 1fr;
+      gap:14px;
+    }
+
+    .plans{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+    .price{
+      font-size:34px;
+      font-weight:900;
+      letter-spacing:-.02em;
+      margin-top:10px;
+      color:#fff;
+    }
+    .small{
+      font-size:12px;
+      color:var(--muted);
+    }
+    ul{
+      margin:12px 0 0; padding-left:18px;
+      color:var(--muted);
+      line-height:1.6;
+      font-size:14px;
+    }
+    .planBtn{
+      margin-top:14px;
+      width:100%;
+      text-align:center;
+      display:inline-block;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.18);
+      background: linear-gradient(180deg, #f0c95b, var(--gold));
+      color:#000;
+      font-weight:900;
+      cursor:pointer;
+    }
+
+    footer{
+      padding:26px 0 36px;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    /* WhatsApp Floating Button */
+    .wa-float{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      z-index:99;
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    .wa-pill{
+      background: rgba(0,0,0,.65);
+      border:1px solid rgba(255,255,255,.14);
+      color:#fff;
+      padding:10px 12px;
+      border-radius: 14px;
+      font-size:13px;
+      backdrop-filter: blur(10px);
+      display:none;
+    }
+    .wa-btn{
+      width:56px;
+      height:56px;
+      border-radius: 18px;
+      background: #25D366;
+      display:grid;
+      place-items:center;
+      box-shadow: 0 18px 45px rgba(0,0,0,.45);
+      border:1px solid rgba(255,255,255,.18);
+      cursor:pointer;
+    }
+    .wa-btn svg{width:28px;height:28px; fill:#fff;}
+
+    @media (max-width: 940px){
+      .heroGrid{grid-template-columns: 1fr;}
+      .gallery{grid-template-columns: 1fr;}
+      .sideCol{grid-template-rows:auto}
+      .grid3, .plans{grid-template-columns: 1fr;}
+      h1{font-size:38px}
+      .wa-pill{display:block;}
+      .navlinks{display:none;}
+    }
+  </style>
+</head>
+
+<body>
+  <!-- CONFIG -->
+  <script>
+    const WHATSAPP_NUMBER = "447882958586"; // +44 7882 958586
+    const DEFAULT_TEXT = "Olá, quero agendar uma avaliação com o Jhon Novais (Personal Trainer Premium).";
+    function waLink(text){
+      const msg = encodeURIComponent(text || DEFAULT_TEXT);
+      return `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
+    }
+  </script>
+
+  <header>
+    <div class="wrap">
+      <div class="nav">
+        <div class="brand">
+          <!-- Troque o src pela logo final -->
+          <img src="assets/logo-jn.png" alt="JN Personal Trainer Premium" />
+        </div>
+
+        <nav class="navlinks">
+          <a href="#sobre">Sobre</a>
+          <a href="#galeria">Galeria</a>
+          <a href="#planos">Planos</a>
+          <a href="#contato">Contato</a>
+        </nav>
+
+        <a class="cta" id="ctaTop" href="#">ENQUIRE NOW</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="heroGrid">
+        <div>
+          <div class="kicker">Personal Trainer • Biomecânica • Premium</div>
+          <h1>Performance com segurança. Resultado com método.</h1>
+          <p class="sub">
+            Avaliação + estratégia + acompanhamento. Você não compra “treino”.
+            Você compra um processo premium com rastreio de evolução e responsabilidade profissional.
+          </p>
+          <div class="heroBtns">
+            <a class="btn primary" id="btnWhatsHero" href="#">Falar no WhatsApp</a>
+            <a class="btn" href="#planos">Ver Planos</a>
+          </div>
+        </div>
+
+        <div class="heroCard">
+          <div class="row"><span>Contato WhatsApp</span><b>+44 7882 958586</b></div>
+          <div class="row"><span>Formato</span><b>Presencial / Online</b></div>
+          <div class="row"><span>Foco</span><b>Hipertrofia • Emagrecimento • Performance</b></div>
+          <div class="row"><span>Processo</span><b>Anamnese • Call • Plano</b></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sobre">
+      <div class="titleRow">
+        <h2>O Processo (sem enrolação)</h2>
+        <div class="hint">Experiência premium, direta e segura.</div>
+      </div>
+
+      <div class="grid3">
+        <div class="card">
+          <span class="badge">1 • Anamnese & Segurança</span>
+          <p>
+            Você preenche a ficha de anamnese para reduzir riscos e evitar negligências.
+            Isso protege você e o profissional antes de iniciar qualquer prescrição.
+          </p>
+        </div>
+        <div class="card">
+          <span class="badge">2 • Call de Alinhamento</span>
+          <p>
+            Uma chamada rápida para entender objetivo, rotina, limitações e histórico de treino.
+            Aqui a biomecânica entra para ajustar o “como” com segurança.
+          </p>
+        </div>
+        <div class="card">
+          <span class="badge">3 • Plano & Acompanhamento</span>
+          <p>
+            Entrega de plano + metas + checkpoints. Ajustes baseados em dados (e não “achismo”).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="galeria">
+      <div class="titleRow">
+        <h2>Galeria</h2>
+        <div class="hint">Troque as imagens pelos arquivos reais.</div>
+      </div>
+
+      <div class="gallery">
+        <div class="imgBox">
+          <img src="assets/hero-1.jpg" alt="Treino / transformação / branding" />
+          <div class="imgCap">Transformações / Resultados</div>
+        </div>
+
+        <div class="sideCol">
+          <div class="imgBox">
+            <img src="assets/hero-2.jpg" alt="Ambiente / Studio / Gym" />
+            <div class="imgCap">Ambiente / Studio</div>
+          </div>
+          <div class="imgBox">
+            <img src="assets/hero-3.jpg" alt="Acompanhamento / Online" />
+            <div class="imgCap">Online / Consultoria</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="planos">
+      <div class="titleRow">
+        <h2>Planos & Projetos (ideias prontas)</h2>
+        <div class="hint">Você ajusta preços e entregáveis.</div>
+      </div>
+
+      <div class="plans">
+        <div class="card">
+          <span class="badge">START • Base</span>
+          <div class="price">£---</div>
+          <div class="small">Para quem quer direção e método.</div>
+          <ul>
+            <li>Anamnese + triagem</li>
+            <li>1 Call (30–45min)</li>
+            <li>Plano de treino (4 semanas)</li>
+            <li>Checklist de execução</li>
+          </ul>
+          <a class="planBtn" href="#" data-plan="START">Quero esse plano</a>
+        </div>
+
+        <div class="card" style="border-color: rgba(212,163,47,.35); background: rgba(212,163,47,.08);">
+          <span class="badge">PREMIUM • Acompanhamento</span>
+          <div class="price">£---</div>
+          <div class="small">O “carro-chefe” do site.</div>
+          <ul>
+            <li>Call inicial + Call de ajustes</li>
+            <li>Treino + estratégia (8–12 semanas)</li>
+            <li>Check-in semanal (WhatsApp)</li>
+            <li>Correção técnica (vídeo)</li>
+          </ul>
+          <a class="planBtn" href="#" data-plan="PREMIUM">Quero esse plano</a>
+        </div>
+
+        <div class="card">
+          <span class="badge">PROJECT • Biomecânica</span>
+          <div class="price">£---</div>
+          <div class="small">Para quem tem dor, limitação ou quer performance.</div>
+          <ul>
+            <li>Triagem de movimento</li>
+            <li>Ajuste de padrão técnico</li>
+            <li>Prevenção de lesões</li>
+            <li>Plano personalizado por alavancas</li>
+          </ul>
+          <a class="planBtn" href="#" data-plan="BIOMECÂNICA">Quero esse projeto</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contato">
+      <div class="titleRow">
+        <h2>Contato</h2>
+        <div class="hint">WhatsApp direto, simples e rápido.</div>
+      </div>
+
+      <div class="card">
+        <p style="margin:0 0 10px;">
+          Atendimento via WhatsApp: <b style="color:#fff;">+44 7882 958586</b>
+        </p>
+        <a class="btn primary" id="btnWhatsContact" href="#">Abrir WhatsApp</a>
+      </div>
+    </section>
+
+    <footer>
+      <div>
+        © <span id="year"></span> Jhon Novais Personal Trainer Premium • London / Online
+      </div>
+      <div style="margin-top:8px;">
+        Recomendação: inclua política de privacidade e termo de consentimento para dados de saúde (GDPR).
+      </div>
+    </footer>
+  </main>
+
+  <!-- WhatsApp Floating -->
+  <div class="wa-float">
+    <div class="wa-pill">WhatsApp</div>
+    <a class="wa-btn" id="waFloat" href="#" aria-label="WhatsApp">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M19.11 17.53c-.28-.14-1.64-.81-1.89-.9-.25-.09-.44-.14-.62.14-.19.28-.71.9-.87 1.08-.16.19-.32.21-.6.07-.28-.14-1.17-.43-2.23-1.36-.82-.73-1.38-1.64-1.54-1.92-.16-.28-.02-.43.12-.57.12-.12.28-.32.42-.48.14-.16.19-.28.28-.46.09-.19.05-.35-.02-.5-.07
