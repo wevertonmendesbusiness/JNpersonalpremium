@@ -16,6 +16,8 @@
       --shadow: 0 18px 50px rgba(0,0,0,.55);
       --radius:18px;
       --max:1100px;
+      --ok:#25D366;
+      --danger:#ef4444;
     }
     *{box-sizing:border-box}
     body{
@@ -64,6 +66,37 @@
       white-space:nowrap;
     }
 
+    .topbar{
+      position:fixed;
+      left:0; right:0; bottom:0;
+      z-index:80;
+      border-top:1px solid var(--line);
+      background: rgba(0,0,0,.68);
+      backdrop-filter: blur(10px);
+      padding:10px 0;
+    }
+    .topbar .inner{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      max-width:var(--max); margin:0 auto; padding:0 18px;
+      color:var(--muted);
+      font-size:13px;
+    }
+    .topbar .inner b{color:#fff}
+    .topbar .inner .fast{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:9px 12px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color:#fff; font-weight:800; cursor:pointer;
+    }
+    .pill.wa{
+      background: rgba(37,211,102,.16);
+      border:1px solid rgba(37,211,102,.35);
+    }
+
     .hero{padding:70px 0 26px;}
     .heroGrid{
       display:grid;
@@ -89,7 +122,15 @@
       font-size:16px;
       line-height:1.55;
       margin:0 0 18px;
-      max-width:60ch;
+      max-width:62ch;
+    }
+    .micro{
+      margin-top:12px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.55;
+      border-left:3px solid rgba(212,163,47,.55);
+      padding-left:12px;
     }
     .heroBtns{display:flex; gap:12px; flex-wrap:wrap;}
     .btn{
@@ -98,11 +139,16 @@
       border:1px solid var(--line);
       background: rgba(255,255,255,.06);
       color:#fff;
-      font-weight:700;
+      font-weight:800;
       cursor:pointer;
     }
     .btn.primary{
       background: linear-gradient(180deg, #f0c95b, var(--gold));
+      color:#000;
+      border:1px solid rgba(255,255,255,.18);
+    }
+    .btn.green{
+      background: linear-gradient(180deg, #34d399, var(--ok));
       color:#000;
       border:1px solid rgba(255,255,255,.18);
     }
@@ -157,12 +203,64 @@
       border:1px solid var(--line);
       background: rgba(212,163,47,.10);
       color: #f7dc9b;
-      font-weight:700;
+      font-weight:800;
     }
 
-    .gallery{
+    /* Results (Before/After) */
+    .results{
       display:grid;
-      grid-template-columns: 1.2fr .8fr;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap:14px;
+    }
+    .ba{
+      border-radius: var(--radius);
+      border:1px solid var(--line);
+      overflow:hidden;
+      background:#0b0b0b;
+      position:relative;
+      min-height: 280px;
+    }
+    .ba img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .ba .labels{
+      position:absolute; left:12px; right:12px; bottom:12px;
+      display:flex; justify-content:space-between; gap:10px;
+    }
+    .tag{
+      font-size:12px;
+      font-weight:900;
+      padding:8px 10px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(8px);
+    }
+    .tag.gold{border-color: rgba(212,163,47,.35); color:#f7dc9b}
+    .tag.white{color:#fff}
+    .slider{
+      position:absolute; top:0; bottom:0; left:0;
+      width:50%;
+      overflow:hidden;
+      border-right:2px solid rgba(255,255,255,.40);
+    }
+    .slider img{height:100%; width:100%; object-fit:cover;}
+    .handle{
+      position:absolute; top:0; bottom:0; left:50%;
+      width:2px; background: rgba(255,255,255,.60);
+    }
+    .range{
+      width:100%;
+      margin-top:10px;
+    }
+
+    /* Gallery (studio / treino) */
+    .galleryGrid{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
       gap:14px;
     }
     .imgBox{
@@ -170,7 +268,7 @@
       border:1px solid var(--line);
       overflow:hidden;
       background:#0b0b0b;
-      min-height: 260px;
+      min-height: 180px;
       position:relative;
     }
     .imgBox img{
@@ -181,19 +279,14 @@
       filter: contrast(1.05);
     }
     .imgCap{
-      position:absolute; left:12px; bottom:12px;
+      position:absolute; left:10px; bottom:10px;
       background: rgba(0,0,0,.55);
       border:1px solid rgba(255,255,255,.12);
-      padding:8px 10px;
+      padding:7px 9px;
       border-radius:12px;
-      font-size:13px;
+      font-size:12px;
       color:#fff;
       backdrop-filter: blur(8px);
-    }
-    .sideCol{
-      display:grid;
-      grid-template-rows: 1fr 1fr;
-      gap:14px;
     }
 
     .plans{
@@ -232,8 +325,34 @@
       cursor:pointer;
     }
 
+    /* FAQ */
+    .faq{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+    }
+    details{
+      background: rgba(255,255,255,.04);
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      padding:14px;
+    }
+    summary{
+      cursor:pointer;
+      font-weight:900;
+      color:#fff;
+      list-style:none;
+    }
+    summary::-webkit-details-marker{display:none}
+    details p{
+      margin:10px 0 0;
+      color:var(--muted);
+      line-height:1.55;
+      font-size:14px;
+    }
+
     footer{
-      padding:26px 0 36px;
+      padding:26px 0 90px;
       border-top:1px solid var(--line);
       color:var(--muted);
       font-size:13px;
@@ -243,7 +362,7 @@
     .wa-float{
       position:fixed;
       right:18px;
-      bottom:18px;
+      bottom:74px;
       z-index:99;
       display:flex;
       gap:10px;
@@ -272,23 +391,110 @@
     }
     .wa-btn svg{width:28px;height:28px; fill:#fff;}
 
+    /* Modal */
+    .modal{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.68);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      z-index:120;
+    }
+    .modal.open{display:flex;}
+    .modalBox{
+      width:min(760px, 100%);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.14);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .modalHead{
+      padding:16px 16px 12px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+    .modalHead b{color:#fff;}
+    .close{
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.14);
+      color:#fff;
+      padding:10px 12px;
+      border-radius: 14px;
+      cursor:pointer;
+      font-weight:900;
+    }
+    .modalBody{padding:16px;}
+    .formGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    label{
+      display:block;
+      font-size:12px;
+      font-weight:900;
+      color:#f0f0f0;
+      margin-bottom:6px;
+      letter-spacing:.02em;
+    }
+    input, select{
+      width:100%;
+      padding:12px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.35);
+      color:#fff;
+      outline:none;
+    }
+    input::placeholder{color:#8a8a8a}
+    .full{grid-column:1/-1}
+    .note{
+      margin-top:12px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.55;
+      border-left:3px solid rgba(37,211,102,.55);
+      padding-left:12px;
+    }
+    .actions{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:14px;
+    }
+    .err{
+      margin-top:10px;
+      color: #fecaca;
+      background: rgba(239,68,68,.14);
+      border:1px solid rgba(239,68,68,.25);
+      padding:10px 12px;
+      border-radius: 14px;
+      display:none;
+      font-size:13px;
+      line-height:1.45;
+    }
+
     @media (max-width: 940px){
       .heroGrid{grid-template-columns: 1fr;}
-      .gallery{grid-template-columns: 1fr;}
-      .sideCol{grid-template-rows:auto}
       .grid3, .plans{grid-template-columns: 1fr;}
+      .results{grid-template-columns: 1fr;}
+      .galleryGrid{grid-template-columns: 1fr 1fr;}
+      .faq{grid-template-columns: 1fr;}
       h1{font-size:38px}
       .wa-pill{display:block;}
       .navlinks{display:none;}
+      .formGrid{grid-template-columns: 1fr;}
+      .topbar .inner{flex-direction:column; align-items:flex-start}
     }
   </style>
 </head>
 
 <body>
-  <!-- CONFIG -->
   <script>
+    // WhatsApp Click-to-Chat (sem + e sem espaços)
     const WHATSAPP_NUMBER = "447882958586"; // +44 7882 958586
     const DEFAULT_TEXT = "Olá, quero agendar uma avaliação com o Jhon Novais (Personal Trainer Premium).";
+
     function waLink(text){
       const msg = encodeURIComponent(text || DEFAULT_TEXT);
       return `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
@@ -299,177 +505,482 @@
     <div class="wrap">
       <div class="nav">
         <div class="brand">
-          <!-- Troque o src pela logo final -->
           <img src="assets/logo-jn.png" alt="JN Personal Trainer Premium" />
         </div>
 
         <nav class="navlinks">
-          <a href="#sobre">Sobre</a>
-          <a href="#galeria">Galeria</a>
+          <a href="#resultados">Resultados</a>
           <a href="#planos">Planos</a>
+          <a href="#faq">Dúvidas</a>
           <a href="#contato">Contato</a>
         </nav>
 
-        <a class="cta" id="ctaTop" href="#">ENQUIRE NOW</a>
+        <a class="cta" id="ctaTop" href="#">FALAR AGORA</a>
       </div>
     </div>
   </header>
 
   <main class="wrap">
-    <section class="hero">
+    <!-- HERO -->
+    <section class="hero" id="topo">
       <div class="heroGrid">
         <div>
           <div class="kicker">Personal Trainer • Biomecânica • Premium</div>
-          <h1>Performance com segurança. Resultado com método.</h1>
+          <h1>Seu próximo resultado começa com uma mensagem no WhatsApp.</h1>
           <p class="sub">
-            Avaliação + estratégia + acompanhamento. Você não compra “treino”.
-            Você compra um processo premium com rastreio de evolução e responsabilidade profissional.
+            Não é “treino genérico”. É <b>avaliação + estratégia + acompanhamento</b>.
+            Em 2 minutos você me diz seu objetivo e eu te respondo com o melhor caminho.
           </p>
+
           <div class="heroBtns">
-            <a class="btn primary" id="btnWhatsHero" href="#">Falar no WhatsApp</a>
-            <a class="btn" href="#planos">Ver Planos</a>
+            <a class="btn green" id="btnWhatsHero" href="#">Falar no WhatsApp</a>
+            <a class="btn primary" href="#resultados">Ver Antes & Depois</a>
+            <a class="btn" href="#planos">Escolher um plano</a>
+          </div>
+
+          <div class="micro">
+            <b>Como funciona:</b> você escolhe um plano → preenche um cadastro rápido →
+            eu recebo seu contexto e te retorno no WhatsApp com o próximo passo (Call + orientação).
           </div>
         </div>
 
         <div class="heroCard">
-          <div class="row"><span>Contato WhatsApp</span><b>+44 7882 958586</b></div>
-          <div class="row"><span>Formato</span><b>Presencial / Online</b></div>
+          <div class="row"><span>WhatsApp</span><b>+44 7882 958586</b></div>
+          <div class="row"><span>Formato</span><b>London / Online</b></div>
           <div class="row"><span>Foco</span><b>Hipertrofia • Emagrecimento • Performance</b></div>
-          <div class="row"><span>Processo</span><b>Anamnese • Call • Plano</b></div>
+          <div class="row"><span>Risco reduzido</span><b>Anamnese + Call</b></div>
         </div>
       </div>
     </section>
 
+    <!-- PROCESSO -->
     <section id="sobre">
       <div class="titleRow">
-        <h2>O Processo (sem enrolação)</h2>
-        <div class="hint">Experiência premium, direta e segura.</div>
+        <h2>O processo (curto e sério)</h2>
+        <div class="hint">Sem achismo. Sem improviso.</div>
       </div>
 
       <div class="grid3">
         <div class="card">
-          <span class="badge">1 • Anamnese & Segurança</span>
-          <p>
-            Você preenche a ficha de anamnese para reduzir riscos e evitar negligências.
-            Isso protege você e o profissional antes de iniciar qualquer prescrição.
-          </p>
+          <span class="badge">1 • Cadastro & Anamnese</span>
+          <p>Você informa dados básicos para eu entender seu ponto de partida e reduzir risco de erro, dor ou intercorrência.</p>
         </div>
         <div class="card">
-          <span class="badge">2 • Call de Alinhamento</span>
-          <p>
-            Uma chamada rápida para entender objetivo, rotina, limitações e histórico de treino.
-            Aqui a biomecânica entra para ajustar o “como” com segurança.
-          </p>
+          <span class="badge">2 • Call de alinhamento</span>
+          <p>Uma conversa direta para objetivos, rotina, limitações e estratégia (com base em biomecânica e progressão).</p>
         </div>
         <div class="card">
-          <span class="badge">3 • Plano & Acompanhamento</span>
-          <p>
-            Entrega de plano + metas + checkpoints. Ajustes baseados em dados (e não “achismo”).
-          </p>
+          <span class="badge">3 • Plano + acompanhamento</span>
+          <p>Entrega do plano e ajustes por checkpoints. Você evolui com método, não com “sorte”.</p>
         </div>
       </div>
     </section>
 
+    <!-- RESULTADOS ANTES/DEPOIS -->
+    <section id="resultados">
+      <div class="titleRow">
+        <h2>Resultados (Antes & Depois)</h2>
+        <div class="hint">Troque as imagens por cases reais.</div>
+      </div>
+
+      <div class="results">
+        <!-- Card 1 -->
+        <div class="card">
+          <div class="ba" data-ba="1">
+            <img src="assets/ba1-after.jpg" alt="Depois - Resultado 1">
+            <div class="slider">
+              <img src="assets/ba1-before.jpg" alt="Antes - Resultado 1">
+            </div>
+            <div class="handle"></div>
+            <div class="labels">
+              <span class="tag white">ANTES</span>
+              <span class="tag gold">DEPOIS</span>
+            </div>
+          </div>
+          <input class="range" type="range" min="0" max="100" value="50" oninput="moveBA(1,this.value)">
+          <p style="margin:10px 0 0; color:var(--muted); font-size:13px;">
+            Exemplo: “-6kg em 8 semanas • postura e execução corrigidas”
+          </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="card">
+          <div class="ba" data-ba="2">
+            <img src="assets/ba2-after.jpg" alt="Depois - Resultado 2">
+            <div class="slider">
+              <img src="assets/ba2-before.jpg" alt="Antes - Resultado 2">
+            </div>
+            <div class="handle"></div>
+            <div class="labels">
+              <span class="tag white">ANTES</span>
+              <span class="tag gold">DEPOIS</span>
+            </div>
+          </div>
+          <input class="range" type="range" min="0" max="100" value="50" oninput="moveBA(2,this.value)">
+          <p style="margin:10px 0 0; color:var(--muted); font-size:13px;">
+            Exemplo: “Recomposição corporal • +massa magra • -medidas”
+          </p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="card">
+          <div class="ba" data-ba="3">
+            <img src="assets/ba3-after.jpg" alt="Depois - Resultado 3">
+            <div class="slider">
+              <img src="assets/ba3-before.jpg" alt="Antes - Resultado 3">
+            </div>
+            <div class="handle"></div>
+            <div class="labels">
+              <span class="tag white">ANTES</span>
+              <span class="tag gold">DEPOIS</span>
+            </div>
+          </div>
+          <input class="range" type="range" min="0" max="100" value="50" oninput="moveBA(3,this.value)">
+          <p style="margin:10px 0 0; color:var(--muted); font-size:13px;">
+            Exemplo: “Performance • força • técnica refinada”
+          </p>
+        </div>
+      </div>
+
+      <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+        <a class="btn green" href="#" id="btnWhatsResults">Quero um plano pra mim</a>
+        <a class="btn" href="#planos">Escolher plano</a>
+      </div>
+    </section>
+
+    <!-- GALERIA (ambiente / treinos / bastidores) -->
     <section id="galeria">
       <div class="titleRow">
-        <h2>Galeria</h2>
-        <div class="hint">Troque as imagens pelos arquivos reais.</div>
+        <h2>Galeria (Studio / Treinos / Bastidores)</h2>
+        <div class="hint">Imagens que passam confiança e profissionalismo.</div>
       </div>
 
-      <div class="gallery">
-        <div class="imgBox">
-          <img src="assets/hero-1.jpg" alt="Treino / transformação / branding" />
-          <div class="imgCap">Transformações / Resultados</div>
-        </div>
-
-        <div class="sideCol">
-          <div class="imgBox">
-            <img src="assets/hero-2.jpg" alt="Ambiente / Studio / Gym" />
-            <div class="imgCap">Ambiente / Studio</div>
-          </div>
-          <div class="imgBox">
-            <img src="assets/hero-3.jpg" alt="Acompanhamento / Online" />
-            <div class="imgCap">Online / Consultoria</div>
-          </div>
-        </div>
+      <div class="galleryGrid">
+        <div class="imgBox"><img src="assets/g1.jpg" alt="Studio"><div class="imgCap">Studio</div></div>
+        <div class="imgBox"><img src="assets/g2.jpg" alt="Treino"><div class="imgCap">Execução</div></div>
+        <div class="imgBox"><img src="assets/g3.jpg" alt="Acompanhamento"><div class="imgCap">Acompanhamento</div></div>
+        <div class="imgBox"><img src="assets/g4.jpg" alt="Online"><div class="imgCap">Online</div></div>
+        <div class="imgBox"><img src="assets/g5.jpg" alt="Biomecânica"><div class="imgCap">Biomecânica</div></div>
+        <div class="imgBox"><img src="assets/g6.jpg" alt="Postura"><div class="imgCap">Postura</div></div>
+        <div class="imgBox"><img src="assets/g7.jpg" alt="Força"><div class="imgCap">Força</div></div>
+        <div class="imgBox"><img src="assets/g8.jpg" alt="Resultados"><div class="imgCap">Resultados</div></div>
       </div>
     </section>
 
+    <!-- PLANOS -->
     <section id="planos">
       <div class="titleRow">
-        <h2>Planos & Projetos (ideias prontas)</h2>
-        <div class="hint">Você ajusta preços e entregáveis.</div>
+        <h2>Planos & Projetos</h2>
+        <div class="hint">Ao clicar, você faz um cadastro rápido e já fala comigo no WhatsApp.</div>
       </div>
 
       <div class="plans">
         <div class="card">
           <span class="badge">START • Base</span>
           <div class="price">£---</div>
-          <div class="small">Para quem quer direção e método.</div>
+          <div class="small">Direção, método e primeira estrutura.</div>
           <ul>
             <li>Anamnese + triagem</li>
             <li>1 Call (30–45min)</li>
             <li>Plano de treino (4 semanas)</li>
             <li>Checklist de execução</li>
           </ul>
-          <a class="planBtn" href="#" data-plan="START">Quero esse plano</a>
+          <button class="planBtn" onclick="openLeadModal('START')">Selecionar START</button>
         </div>
 
         <div class="card" style="border-color: rgba(212,163,47,.35); background: rgba(212,163,47,.08);">
           <span class="badge">PREMIUM • Acompanhamento</span>
           <div class="price">£---</div>
-          <div class="small">O “carro-chefe” do site.</div>
+          <div class="small">O carro-chefe: processo + ajustes.</div>
           <ul>
             <li>Call inicial + Call de ajustes</li>
             <li>Treino + estratégia (8–12 semanas)</li>
             <li>Check-in semanal (WhatsApp)</li>
             <li>Correção técnica (vídeo)</li>
           </ul>
-          <a class="planBtn" href="#" data-plan="PREMIUM">Quero esse plano</a>
+          <button class="planBtn" onclick="openLeadModal('PREMIUM')">Selecionar PREMIUM</button>
         </div>
 
         <div class="card">
           <span class="badge">PROJECT • Biomecânica</span>
           <div class="price">£---</div>
-          <div class="small">Para quem tem dor, limitação ou quer performance.</div>
+          <div class="small">Para dor, limitação e performance real.</div>
           <ul>
             <li>Triagem de movimento</li>
             <li>Ajuste de padrão técnico</li>
             <li>Prevenção de lesões</li>
-            <li>Plano personalizado por alavancas</li>
+            <li>Plano por alavancas</li>
           </ul>
-          <a class="planBtn" href="#" data-plan="BIOMECÂNICA">Quero esse projeto</a>
+          <button class="planBtn" onclick="openLeadModal('BIOMECÂNICA')">Selecionar PROJETO</button>
         </div>
       </div>
     </section>
 
+    <!-- FAQ -->
+    <section id="faq">
+      <div class="titleRow">
+        <h2>Dúvidas frequentes</h2>
+        <div class="hint">Transparência = mais conversão.</div>
+      </div>
+
+      <div class="faq">
+        <details><summary>1) Por que eu preciso preencher a ficha antes?</summary><p>Porque eu preciso entender seu histórico e reduzir risco. Sem isso, treinar “no escuro” é negligência e pode dar ruim.</p></details>
+        <details><summary>2) Quanto tempo leva para começar?</summary><p>Rápido: cadastro + WhatsApp. Eu te respondo e alinhamos a Call. Dependendo da agenda, você inicia ainda na mesma semana.</p></details>
+        <details><summary>3) Funciona para iniciantes?</summary><p>Sim — e iniciantes se beneficiam mais, porque a execução correta evita lesão e acelera resultado.</p></details>
+        <details><summary>4) Posso fazer online?</summary><p>Sim. Online com check-in e correção por vídeo funciona muito bem quando a estrutura é bem feita.</p></details>
+        <details><summary>5) Você trabalha com dor/limitação?</summary><p>Sim, com triagem e ajuste técnico. Se houver sinal de algo clínico, eu indico avaliação profissional de saúde.</p></details>
+        <details><summary>6) Preciso de academia?</summary><p>Preferível, mas dá para estruturar treino com poucos equipamentos dependendo do seu objetivo.</p></details>
+        <details><summary>7) Qual o diferencial “premium” aqui?</summary><p>Processo e responsabilidade: anamnese, call, estratégia e ajustes. Você não recebe só “planilha”.</p></details>
+        <details><summary>8) Em quanto tempo eu vejo resultado?</summary><p>Depende do ponto de partida e consistência. Normalmente dá para medir evolução em 2–4 semanas (força, medidas, postura, energia).</p></details>
+        <details><summary>9) Preciso seguir dieta?</summary><p>Sem nutrição alinhada, o resultado limita. Eu te oriento no básico e, se necessário, indicamos acompanhamento nutricional.</p></details>
+        <details><summary>10) Como é o acompanhamento no WhatsApp?</summary><p>Check-ins (semanal ou combinado), ajustes de treino e suporte rápido para execução e rotina.</p></details>
+        <details><summary>11) Posso trocar de plano depois?</summary><p>Sim. Começa com o que faz sentido e evolui para o acompanhamento conforme necessidade.</p></details>
+        <details><summary>12) Seus dados ficam seguros?</summary><p>Sim. Usamos apenas para atendimento e planejamento. Recomendo incluir política de privacidade (GDPR) no site.</p></details>
+      </div>
+
+      <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+        <a class="btn green" id="btnWhatsFaq" href="#">Tirar dúvidas no WhatsApp</a>
+        <a class="btn" href="#planos">Escolher plano</a>
+      </div>
+    </section>
+
+    <!-- CONTATO -->
     <section id="contato">
       <div class="titleRow">
         <h2>Contato</h2>
-        <div class="hint">WhatsApp direto, simples e rápido.</div>
+        <div class="hint">Clique e fale direto comigo.</div>
       </div>
 
       <div class="card">
         <p style="margin:0 0 10px;">
-          Atendimento via WhatsApp: <b style="color:#fff;">+44 7882 958586</b>
+          WhatsApp: <b style="color:#fff;">+44 7882 958586</b>
         </p>
-        <a class="btn primary" id="btnWhatsContact" href="#">Abrir WhatsApp</a>
+        <a class="btn green" id="btnWhatsContact" href="#">Abrir WhatsApp</a>
       </div>
     </section>
 
     <footer>
-      <div>
-        © <span id="year"></span> Jhon Novais Personal Trainer Premium • London / Online
-      </div>
+      <div>© <span id="year"></span> Jhon Novais Personal Trainer Premium • London / Online</div>
       <div style="margin-top:8px;">
-        Recomendação: inclua política de privacidade e termo de consentimento para dados de saúde (GDPR).
+        Dica: incluir Política de Privacidade (GDPR) e Termo de Consentimento para dados de saúde.
       </div>
     </footer>
   </main>
 
-  <!-- WhatsApp Floating -->
+  <!-- WHATSAPP FLOAT -->
   <div class="wa-float">
     <div class="wa-pill">WhatsApp</div>
     <a class="wa-btn" id="waFloat" href="#" aria-label="WhatsApp">
       <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M19.11 17.53c-.28-.14-1.64-.81-1.89-.9-.25-.09-.44-.14-.62.14-.19.28-.71.9-.87 1.08-.16.19-.32.21-.6.07-.28-.14-1.17-.43-2.23-1.36-.82-.73-1.38-1.64-1.54-1.92-.16-.28-.02-.43.12-.57.12-.12.28-.32.42-.48.14-.16.19-.28.28-.46.09-.19.05-.35-.02-.5-.07
+        <path d="M19.11 17.53c-.28-.14-1.64-.81-1.89-.9-.25-.09-.44-.14-.62.14-.19.28-.71.9-.87 1.08-.16.19-.32.21-.6.07-.28-.14-1.17-.43-2.23-1.36-.82-.73-1.38-1.64-1.54-1.92-.16-.28-.02-.43.12-.57.12-.12.28-.32.42-.48.14-.16.19-.28.28-.46.09-.19.05-.35-.02-.5-.07-.14-.62-1.5-.85-2.06-.22-.53-.45-.46-.62-.46l-.53-.01c-.19 0-.5.07-.76.35-.25.28-.97.95-.97 2.32 0 1.36.99 2.68 1.13 2.87.14.19 1.95 2.98 4.73 4.18.66.28 1.17.45 1.57.58.66.21 1.26.18 1.74.11.53-.08 1.64-.67 1.87-1.32.23-.65.23-1.2.16-1.32-.07-.11-.25-.18-.53-.32ZM16 3.2c-7.06 0-12.8 5.74-12.8 12.8 0 2.25.59 4.44 1.71 6.37L3.2 28.8l6.6-1.69A12.74 12.74 0 0 0 16 28.8c7.06 0 12.8-5.74 12.8-12.8C28.8 8.94 23.06 3.2 16 3.2Zm0 23.04c-1.98 0-3.92-.53-5.61-1.53l-.4-.24-3.92 1 1.04-3.82-.26-.39A10.86 10.86 0 0 1 5.12 16c0-6.01 4.87-10.88 10.88-10.88S26.88 9.99 26.88 16 22.01 26.24 16 26.24Z"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- MODAL CADASTRO (obrigatório ao selecionar plano) -->
+  <div class="modal" id="leadModal" role="dialog" aria-modal="true" aria-label="Cadastro">
+    <div class="modalBox">
+      <div class="modalHead">
+        <div>
+          <b>Cadastro rápido</b>
+          <div style="color:var(--muted); font-size:13px; margin-top:2px;">
+            Para eu te orientar com segurança e agilizar o atendimento no WhatsApp.
+          </div>
+        </div>
+        <button class="close" onclick="closeLeadModal()">Fechar</button>
+      </div>
+
+      <div class="modalBody">
+        <div class="badge" id="chosenPlanBadge">Plano: —</div>
+
+        <div class="note" style="margin-top:10px;">
+          <b>Por que pedimos isso?</b> Esses dados evitam erros e reduzem riscos. É o básico para um atendimento responsável.
+        </div>
+
+        <div class="err" id="formErr">Preencha os campos obrigatórios para continuar.</div>
+
+        <!-- Form (seu bloco de dados pessoais, adaptado) -->
+        <div class="formGrid" style="margin-top:14px;">
+          <div class="full">
+            <label>Nome do Aluno *</label>
+            <input id="f_nome" type="text" placeholder="Seu nome completo" />
+          </div>
+
+          <div>
+            <label>Data de Nascimento *</label>
+            <input id="f_nasc" type="date" />
+          </div>
+
+          <div>
+            <label>Sexo *</label>
+            <select id="f_sexo">
+              <option value="">Selecione</option>
+              <option>Masculino</option>
+              <option>Feminino</option>
+            </select>
+          </div>
+
+          <div>
+            <label>Altura (m) *</label>
+            <input id="f_altura" type="number" step="0.01" placeholder="Ex: 1.75" />
+          </div>
+
+          <div>
+            <label>Peso atual (kg) *</label>
+            <input id="f_peso" type="number" step="0.1" placeholder="Ex: 82" />
+          </div>
+
+          <div class="full">
+            <label>Profissão</label>
+            <input id="f_prof" type="text" placeholder="Opcional" />
+          </div>
+
+          <div>
+            <label>Contato preferido *</label>
+            <select id="f_contato">
+              <option value="">Selecione</option>
+              <option>WhatsApp</option>
+              <option>Telefone</option>
+            </select>
+          </div>
+
+          <div>
+            <label>Número *</label>
+            <input id="f_num" type="tel" placeholder="Ex: +44 7xxx xxxxxx" />
+          </div>
+
+          <div class="full">
+            <label>E-mail *</label>
+            <input id="f_email" type="email" placeholder="voce@exemplo.com" />
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn primary" onclick="submitLead()">Continuar e falar no WhatsApp</button>
+          <button class="btn" onclick="prefillExample()">Preencher exemplo</button>
+        </div>
+
+        <div class="note">
+          Depois do envio, você será redirecionado para o WhatsApp com uma mensagem automática contendo o plano escolhido e seus dados.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="topbar">
+    <div class="inner">
+      <div>WhatsApp direto: <b>+44 7882 958586</b> • Resposta rápida</div>
+      <div class="fast">
+        <span class="pill" onclick="scrollToEl('planos')">Ver planos</span>
+        <span class="pill wa" onclick="openQuickWa()">Falar agora</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // CTA links
+    document.getElementById("ctaTop").href = waLink("Olá! Quero informações e valores do Personal Trainer Premium.");
+    document.getElementById("btnWhatsHero").href = waLink("Olá! Quero iniciar a avaliação (cadastro + call).");
+    document.getElementById("btnWhatsContact").href = waLink("Olá! Quero falar com o Jhon Novais.");
+    document.getElementById("btnWhatsFaq").href = waLink("Olá! Tenho dúvidas sobre os planos e como funciona o acompanhamento.");
+    document.getElementById("btnWhatsResults").href = waLink("Olá! Vi os resultados e quero um plano para meu objetivo.");
+
+    document.getElementById("waFloat").href = waLink();
+
+    // Antes/Depois slider
+    function moveBA(id, value){
+      const el = document.querySelector(`.ba[data-ba="${id}"]`);
+      const slider = el.querySelector(".slider");
+      const handle = el.querySelector(".handle");
+      slider.style.width = value + "%";
+      handle.style.left = value + "%";
+    }
+
+    // Modal / Lead Capture
+    let selectedPlan = null;
+
+    function openLeadModal(plan){
+      selectedPlan = plan;
+      document.getElementById("chosenPlanBadge").textContent = "Plano: " + plan;
+      document.getElementById("formErr").style.display = "none";
+      document.getElementById("leadModal").classList.add("open");
+    }
+
+    function closeLeadModal(){
+      document.getElementById("leadModal").classList.remove("open");
+    }
+
+    function isValidEmail(email){
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    function submitLead(){
+      const nome = document.getElementById("f_nome").value.trim();
+      const nasc = document.getElementById("f_nasc").value.trim();
+      const sexo = document.getElementById("f_sexo").value.trim();
+      const altura = document.getElementById("f_altura").value.trim();
+      const peso = document.getElementById("f_peso").value.trim();
+      const prof = document.getElementById("f_prof").value.trim();
+      const contato = document.getElementById("f_contato").value.trim();
+      const num = document.getElementById("f_num").value.trim();
+      const email = document.getElementById("f_email").value.trim();
+
+      const err = document.getElementById("formErr");
+
+      if(!selectedPlan || !nome || !nasc || !sexo || !altura || !peso || !contato || !num || !email || !isValidEmail(email)){
+        err.style.display = "block";
+        err.textContent = "Preencha os campos obrigatórios corretamente (incluindo e-mail válido) para continuar.";
+        return;
+      }
+
+      // Mensagem “inteligente”: dá contexto e conduz para call
+      const msg =
+`Olá Jhon! Quero fechar o plano: ${selectedPlan}.
+
+DADOS (cadastro):
+• Nome: ${nome}
+• Nascimento: ${nasc}
+• Sexo: ${sexo}
+• Altura: ${altura} m
+• Peso: ${peso} kg
+• Profissão: ${prof || "-"}
+• Contato preferido: ${contato}
+• Número: ${num}
+• Email: ${email}
+
+Meu objetivo: (vou escrever aqui)
+Minha disponibilidade para Call: (dias/horários)`;
+
+      // Abre WhatsApp com texto
+      window.open(waLink(msg), "_blank");
+      closeLeadModal();
+    }
+
+    function prefillExample(){
+      document.getElementById("f_nome").value = "Ex: Ana Silva";
+      document.getElementById("f_nasc").value = "1995-06-15";
+      document.getElementById("f_sexo").value = "Feminino";
+      document.getElementById("f_altura").value = "1.65";
+      document.getElementById("f_peso").value = "72";
+      document.getElementById("f_prof").value = "Ex: Designer";
+      document.getElementById("f_contato").value = "WhatsApp";
+      document.getElementById("f_num").value = "+44 7xxx xxxxxx";
+      document.getElementById("f_email").value = "ana@email.com";
+    }
+
+    // Helpers
+    function scrollToEl(id){
+      const el = document.getElementById(id);
+      if(el) el.scrollIntoView({behavior:"smooth"});
+    }
+
+    function openQuickWa(){
+      window.open(waLink("Olá! Quero falar agora e entender qual plano é ideal para meu objetivo."), "_blank");
+    }
+
+    // Ano
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
